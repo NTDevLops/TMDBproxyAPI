@@ -6,6 +6,22 @@ app = FastAPI()
 TMDB_IMAGE_BASE = "https://image.tmdb.org"
 TMDB_API_BASE = "https://api.themoviedb.org"
 
+
+@app.get("/")
+async def root():
+    return {
+        "name": "TMDB Proxy API",
+        "status": "running",
+        "version": "1.0.0",
+        "github": "https://github.com/NTDevLops/TMDBproxyAPI",
+        "endpoints": {
+            "image_proxy": "/image/{size}/{path}",
+            "api_proxy": "/info-api/{endpoint}"
+        },
+        "example_image": "/image/t/p/w342/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg",
+        "example_api": "/info-api/3/tv/257790?api_key=YOUR_KEY"
+    }
+
 @app.get("/image/{full_path:path}")
 async def image_proxy(full_path: str):
     target_url = f"{TMDB_IMAGE_BASE}/t/p/{full_path}"
